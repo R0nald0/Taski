@@ -11,6 +11,15 @@ Aplicativo criado afim de melhorar minhas habilidades com um teste real de vaga 
 <img src="https://github.com/user-attachments/assets/4cd40927-f422-4a8f-9bc2-450e841e4f61" height="350em">
 <img src="https://github.com/user-attachments/assets/245cef2d-e30d-4a06-9418-79df2a579f48" height="350em">
 
+
+
+### Estrutura do Projeto
+ *  **assets**/: Arquivos como imagens e ícones.
+ *  **android**/: Arquivos específicos para plataforma Android:
+ *  **ios**/: Arquivos específicos para plataforma Android:
+ *  **lib**/: Possui a lógica do aplicativo,estrutura base, telas, widgets,use cases,data,viewModels,etc
+
+
 ### Como Rodar 
 <p>
  Pra rodar e testar, basta ter o Flutter instalado e executar:
