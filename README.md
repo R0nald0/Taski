@@ -1,18 +1,45 @@
-# taski_todo
+# Taski
 
-Link do desafio https://github.com/WL-Consultings/challenges/tree/main/mobile
+## Sobre o Projeto
+Aplicativo criado afim de melhorar minhas habilidades com um teste real de vaga para uma empresa.O objetivo do Aplicativo é permitir que o usuário crie e gerencie Tasks com descrição, e criação do perfil com imagem e nome.O projeto segue os princípios da Clean Architecture e o padrão MVVM. 
 
-A new Flutter project.
+### Imagens do App
+---
+<img src="https://github.com/user-attachments/assets/496e30e8-34b3-467e-9f55-7d7a50dc023d" height="350em">
+<img src="https://github.com/user-attachments/assets/f20373a8-2f7f-4a4b-bb40-39cd1380ae34" height="350em">
+<img src="https://github.com/user-attachments/assets/1a9ab464-19ad-4339-aaa2-02c9da25433e" height="350em">
+<img src="https://github.com/user-attachments/assets/4cd40927-f422-4a8f-9bc2-450e841e4f61" height="350em">
+<img src="https://github.com/user-attachments/assets/245cef2d-e30d-4a06-9418-79df2a579f48" height="350em">
 
-## Getting Started
+### Como Rodar 
+<p>
+ Pra rodar e testar, basta ter o Flutter instalado e executar:
+</p>
+---
 
-This project is a starting point for a Flutter application.
+```
+ flutter pub get
+ flutter pub run
+```
 
-A few resources to get you started if this is your first Flutter project:
+### Funcionalidades do App
+---
+ * Criar tasks.
+ * Deletar tasks. 
+ * Listagem e Exibição de tasks.
+ * Criar Pefil.
+ * Adcicnar e editar Foto e Nome.
+ * Buscar Task por título.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ ### Tecnologias utilizadas
+ ---
+ * Provider para injeção de Dependência
+ * BLOC para Gerencimento de estado.
+ * SqFlite utilizado para persisitir do dados das tasks loccalment
+ * SharedPreferences para persitir dados do perfil do usuário
+   
+  
+  ###Link do desafio <https://github.com/WL-Consultings/challenges/tree/main/mobile>
+  
+  ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
+  ![Badge em dart](http://img.shields.io/static/v1?label=LENGUAGE&message=%20DART&color=BLUEN&style=for-the-badge)
