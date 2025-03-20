@@ -15,7 +15,6 @@ Aplicativo criado afim de melhorar minhas habilidades com um teste real de vaga 
 <p>
  Pra rodar e testar, basta ter o Flutter instalado e executar:
 </p>
----
 
 ```
  flutter pub get
