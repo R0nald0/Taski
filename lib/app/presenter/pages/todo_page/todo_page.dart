@@ -112,7 +112,7 @@ class _TodoPageState extends BaseStateTaski<TodoPage> {
                   builder: (context, state) {
                     if (state.state == TaskStatus.loaded) {
                       return state.tasks.isEmpty
-                          ? NoTaskWidget()
+                          ? NoTaskWidget(controller: controller,)
                           : ListView.builder(
                               itemCount: state.tasks.length,
                               itemBuilder: (context, index) {

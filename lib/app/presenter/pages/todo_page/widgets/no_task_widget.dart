@@ -1,7 +1,8 @@
 part of '../todo_page.dart';
 
 class NoTaskWidget extends StatelessWidget {
-  const NoTaskWidget({Key? key}) : super(key: key);
+  final TaskController _controller;
+  const NoTaskWidget({super.key,required TaskController controller}) :_controller=controller;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class NoTaskWidget extends StatelessWidget {
             icon: Icon(Icons.add,size:25,color: Colors.blueAccent,),
             iconAlignment: IconAlignment.start,
             onPressed: () {
-              modalBottomSheetCreateTask(context);
+              modalBottomSheetCreateTask(context, _controller);
             },
           )
         ],

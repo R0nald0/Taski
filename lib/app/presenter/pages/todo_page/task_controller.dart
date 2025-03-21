@@ -6,11 +6,13 @@ import 'package:taski_todo/app/presenter/pages/todo_page/bloc/task_state.dart';
 
 class TaskController extends Cubit<TasksState> {
   final ITaskiRepository _taskiRepository;
-
+  
   TaskController({required ITaskiRepository taskRepository})
       : _taskiRepository = taskRepository,
         super(TasksState.initial());
+  
 
+  
   Future<void> findAllTasks() async {
     try {
       emit(state.copyWith(state: TaskStatus.loading));
