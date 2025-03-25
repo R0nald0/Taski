@@ -15,20 +15,18 @@ import 'package:taski_todo/app/presenter/pages/user_page/user_bloc/user_state.da
 part './widgets/no_task_widget.dart';
 
 class TodoPage extends StatefulWidget {
-
-  const TodoPage({super.key});
+  final TaskController controller;
+  const TodoPage({super.key ,required this.controller});
 
   @override
   State<TodoPage> createState() => _TodoPageState();
 }
 
 class _TodoPageState extends BaseStateTaski<TodoPage> {
-  late TaskController controller;
+  
   @override
   onReady() {
-    controller = context.read<TaskController>();
-    controller.findAllTasks();
-
+    widget.controller.findAllTasks();
     return super.onReady();
   }
 
@@ -112,7 +110,7 @@ class _TodoPageState extends BaseStateTaski<TodoPage> {
                   builder: (context, state) {
                     if (state.state == TaskStatus.loaded) {
                       return state.tasks.isEmpty
-                          ? NoTaskWidget(controller: controller,)
+                          ? NoTaskWidget(controller:widget.controller )
                           : ListView.builder(
                               itemCount: state.tasks.length,
                               itemBuilder: (context, index) {
@@ -120,7 +118,7 @@ class _TodoPageState extends BaseStateTaski<TodoPage> {
                                 return TaskWidget(
                                   task: task,
                                   onChecked: (value) {
-                                    controller.updateCheck(!value, task);
+                                   widget.controller.updateCheck(!value, task);
                                   },
                                 );
                               },

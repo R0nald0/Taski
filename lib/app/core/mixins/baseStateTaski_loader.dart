@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class BaseStateTaski<T extends StatefulWidget> extends State<T> {
   var isLoading = false;
+  
+  @override
+  void dispose() {
+    disposeState();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -11,8 +16,12 @@ abstract class BaseStateTaski<T extends StatefulWidget> extends State<T> {
        onReady();
     });
   }
+
+  void disposeState(){}
+
+
   onReady(){ }
-   
+  
   showLoader() {
     isLoading = true;
     if (isLoading) {
@@ -26,12 +35,12 @@ abstract class BaseStateTaski<T extends StatefulWidget> extends State<T> {
       );
     }
   }
-
+ 
   hideLoader() {
     if(isLoading){
         Navigator.of(context).pop();
         isLoading = false;
     }
-  
   }
+
 }

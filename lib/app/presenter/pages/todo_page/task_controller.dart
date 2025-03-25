@@ -11,11 +11,10 @@ class TaskController extends Cubit<TasksState> {
       : _taskiRepository = taskRepository,
         super(TasksState.initial());
   
-
-  
   Future<void> findAllTasks() async {
     try {
       emit(state.copyWith(state: TaskStatus.loading));
+
       final tasks = await _taskiRepository.findTasks();
       emit(state.copyWith(tasks: tasks, state: TaskStatus.loaded));
     } on TaskiException catch (e) {
@@ -35,17 +34,7 @@ class TaskController extends Cubit<TasksState> {
     }
   }
 
-  Future<void> createTask(Task task) async {
-    try {
-      emit(state.copyWith(state: TaskStatus.loading));
-      await Future.delayed(Duration(milliseconds: 2000));
-      await _taskiRepository.createTask(task);
-      final tasks = await _taskiRepository.findTasks();
-      emit(state.copyWith(state: TaskStatus.loaded, tasks: tasks));
-    } on TaskiException catch (e) {
-       emit(state.copyWith(erro: e.message,state: TaskStatus.erro));
-    }
-  }
+  
 
   Future<void> updateCheck(bool isCheck, Task task) async {
     try {

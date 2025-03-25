@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:taski_todo/app/core/mixins/baseStateTaski_loader.dart';
 import 'package:taski_todo/app/presenter/commons/extensions.dart';
 import 'package:taski_todo/app/presenter/pages/user_page/user_bloc/user_controller.dart';
@@ -77,7 +76,7 @@ class _UserPageState extends BaseStateTaski<UserPage> {
                         flexibleSpace: state.user != null 
                         ? Image.file(
                            File(state.user!.image!),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         )
                         : Image.asset("assets/images/user-profile.png",fit: BoxFit.cover,),
                         title: Text( state.user != null ? state.user!.name :"Profile"),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:taski_todo/app/core/mixins/baseStateTaski_loader.dart';
+import 'package:taski_todo/app/domain/repository/i_taski_repository.dart';
+import 'package:taski_todo/app/domain/usecase/create_taski_use_case.dart';
 import 'package:taski_todo/app/presenter/page_controller.dart';
 import 'package:taski_todo/app/presenter/page_state.dart';
 import 'package:taski_todo/app/presenter/pages/create_page/create_todo_page.dart';
@@ -29,7 +31,6 @@ class _HomePageState extends BaseStateTaski<HomePage> {
 
   @override
   onReady() {
-    
     userController = context.read<UserController>();
     userController.findUser();
 
@@ -65,7 +66,7 @@ class _HomePageState extends BaseStateTaski<HomePage> {
               builder: (context, state) {
                 return PerfilWidget(
                   imgUrl: state.user?.image,
-                  name: state.user?.name ?? "",
+                  name: state.user?.name ?? "Perfil",
                   onTap: () async {
                     navigator.pushNamed("/user");
                   },
@@ -76,35 +77,33 @@ class _HomePageState extends BaseStateTaski<HomePage> {
         ),
       ),
       bottomNavigationBar: BlocBuilder<PageStateController, PageState>(
-       
         builder: (context, state) {
           return BottomNavigationBar(
-          currentIndex: state.index,
-          backgroundColor: Colors.blueGrey,
-          showUnselectedLabels: true,
-          showSelectedLabels: true,
-          unselectedItemColor: Colors.grey,
-          selectedItemColor: Colors.blue,
-          enableFeedback: true,
-          onTap: (index) {
-            
-            pageController.jumpToPage(index);
-            pageStateController.next(index);
-  
-          },
-          items: [
-            BottomNavigationBarItem(
-              backgroundColor: Colors.white,
-              icon: Icon(Icons.list_rounded),
-              label: 'Taski',
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.add_box_outlined), label: 'Create'),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.check_box_outlined), label: 'Done'),
-          ],
-        );
+            currentIndex: state.index,
+            backgroundColor: Colors.blueGrey,
+            showUnselectedLabels: true,
+            showSelectedLabels: true,
+            unselectedItemColor: Colors.grey,
+            selectedItemColor: Colors.blue,
+            enableFeedback: true,
+            onTap: (index) {
+              pageController.jumpToPage(index);
+              pageStateController.next(index);
+            },
+            items: [
+              BottomNavigationBarItem(
+                backgroundColor: Colors.white,
+                icon: Icon(Icons.list_rounded),
+                label: 'Taski',
+              ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.add_box_outlined), label: 'Create'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.search), label: 'Search'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.check_box_outlined), label: 'Done'),
+            ],
+          );
         },
       ),
       body: BlocBuilder<PageStateController, PageState>(
@@ -115,28 +114,19 @@ class _HomePageState extends BaseStateTaski<HomePage> {
               pageStateController.next(index);
             },
             children: [
-              BlocProvider(
-                create: (context) =>
-                    TaskController(taskRepository: context.read()),
-                child: TodoPage(),
+              TodoPage(
+                controller: context.read<TaskController>(),
               ),
               BlocProvider(
-                create: (context) =>
-                    TaskController(taskRepository: context.read()),
-                child: CreateTodoPage(
-                  controller: context.read(),
-                ),
+                create: (context) => CreateTaskiUseCase(taskController: context.read<ITaskiRepository>()),
+                child: CreateTodoPage(),
               ),
               BlocProvider(
                 create: (context) =>
                     SearchPageController(taskiRepository: context.read()),
                 child: SearchPage(),
               ),
-              BlocProvider(
-                create: (context) =>
-                    TaskController(taskRepository: context.read()),
-                child: DoneTodoPage(),
-              ),
+              DoneTodoPage(),
             ],
           );
         },

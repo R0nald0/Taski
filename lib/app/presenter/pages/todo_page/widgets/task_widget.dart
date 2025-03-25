@@ -11,7 +11,7 @@ class TaskWidget extends StatelessWidget {
   final ValueNotifier<bool> _isExpandedVl;
   final ValueNotifier<bool> _isCheckdVl; 
 
-  TaskWidget({
+    TaskWidget({
     super.key,
     required this.task,
     required this.onChecked,
@@ -51,7 +51,7 @@ class TaskWidget extends StatelessWidget {
                   valueListenable: _isExpandedVl,
                   builder: (context, value, _) {
                     return AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
+                      duration: Duration(milliseconds: 500),
                       constraints: BoxConstraints.loose(
                           Size(!value ? size.height * 0.08 : size.height * 0.19, !value ? size.height * 0.08 : size.height * 0.19)
                         ),
@@ -63,13 +63,14 @@ class TaskWidget extends StatelessWidget {
                                 style: Theme.of(context).textTheme.titleMedium),
                           ),
                           subtitle: value
-                              ? Padding(padding: EdgeInsets.only(bottom: 20),
-                              child: Text(
-                                  task.description,
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                  maxLines: 4,
-                                  overflow: TextOverflow.ellipsis,
-                                )
+                              ? FractionallySizedBox(
+                                 heightFactor: 0.7,
+                                child: Text(
+                                    task.description,
+                                    style: Theme.of(context).textTheme.bodyLarge,
+                                    maxLines: 4,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                               ): SizedBox.shrink(),
                           trailing: IconButton(
                             onPressed: () {

@@ -1,12 +1,11 @@
 part of '../todo_page.dart';
 
 class NoTaskWidget extends StatelessWidget {
-  final TaskController _controller;
-  const NoTaskWidget({super.key,required TaskController controller}) :_controller=controller;
+  final TaskController controller;
+  const NoTaskWidget({super.key,required this.controller});
 
   @override
   Widget build(BuildContext context) {
-
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -28,8 +27,11 @@ class NoTaskWidget extends StatelessWidget {
             ),
             icon: Icon(Icons.add,size:25,color: Colors.blueAccent,),
             iconAlignment: IconAlignment.start,
-            onPressed: () {
-              modalBottomSheetCreateTask(context, _controller);
+            onPressed: ()  async{
+            final isCLosed   = await modalBottomSheetCreateTask(context);
+             if (isCLosed!= null) {
+                controller.findAllTasks();
+             }
             },
           )
         ],
