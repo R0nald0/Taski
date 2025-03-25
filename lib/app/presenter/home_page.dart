@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:taski_todo/app/core/mixins/baseStateTaski_loader.dart';
 import 'package:taski_todo/app/domain/repository/i_taski_repository.dart';
-import 'package:taski_todo/app/domain/usecase/create_taski_use_case.dart';
 import 'package:taski_todo/app/presenter/page_controller.dart';
 import 'package:taski_todo/app/presenter/page_state.dart';
+import 'package:taski_todo/app/presenter/pages/create_page/create_taski_controller.dart';
 import 'package:taski_todo/app/presenter/pages/create_page/create_todo_page.dart';
 import 'package:taski_todo/app/presenter/pages/done_todo_page/done_todo_page.dart';
 import 'package:taski_todo/app/presenter/pages/search_page/Search_page.dart';
 import 'package:taski_todo/app/presenter/pages/search_page/bloc/search_page_controller.dart';
-import 'package:taski_todo/app/presenter/pages/todo_page/bloc/task_state.dart';
 import 'package:taski_todo/app/presenter/pages/todo_page/task_controller.dart';
 import 'package:taski_todo/app/presenter/pages/todo_page/todo_page.dart';
 import 'package:taski_todo/app/presenter/pages/user_page/user_bloc/user_controller.dart';
@@ -40,7 +38,7 @@ class _HomePageState extends BaseStateTaski<HomePage> {
   @override
   Widget build(BuildContext context) {
     pageStateController = context.read<PageStateController>();
-    final navigator = Navigator.of(context);
+    final navigator = Navigator.of(context); 
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -118,7 +116,7 @@ class _HomePageState extends BaseStateTaski<HomePage> {
                 controller: context.read<TaskController>(),
               ),
               BlocProvider(
-                create: (context) => CreateTaskiUseCase(taskController: context.read<ITaskiRepository>()),
+                create: (context) => CreateTaskiController(taskController: context.read<ITaskiRepository>()),
                 child: CreateTodoPage(),
               ),
               BlocProvider(

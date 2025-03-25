@@ -8,7 +8,7 @@ import 'package:taski_todo/app/data/respository/task_repository_impl.dart';
 import 'package:taski_todo/app/data/respository/user_repository.dart';
 import 'package:taski_todo/app/domain/repository/I_user_repository.dart';
 import 'package:taski_todo/app/domain/repository/i_taski_repository.dart';
-import 'package:taski_todo/app/domain/usecase/create_taski_use_case.dart';
+import 'package:taski_todo/app/presenter/pages/create_page/create_taski_controller.dart';
 import 'package:taski_todo/app/domain/usecase/user_use_case.dart';
 import 'package:taski_todo/app/presenter/home_page.dart';
 import 'package:taski_todo/app/presenter/page_controller.dart';
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(lazy: false,create: (context)=> TaskController(taskRepository: context.read())),
           BlocProvider(lazy: false,create: (context)=> UserController(userUseCase: context.read())),
           BlocProvider(create: (context)=> PageStateController()),
-          BlocProvider(create: (context)=> CreateTaskiUseCase(taskController: context.read<ITaskiRepository>()))
+          BlocProvider(create: (context)=> CreateTaskiController(taskController: context.read<ITaskiRepository>()))
        ],
       child: MaterialApp(
           title: 'Taski App',

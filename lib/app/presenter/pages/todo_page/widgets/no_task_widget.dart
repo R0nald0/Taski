@@ -27,11 +27,9 @@ class NoTaskWidget extends StatelessWidget {
             ),
             icon: Icon(Icons.add,size:25,color: Colors.blueAccent,),
             iconAlignment: IconAlignment.start,
-            onPressed: ()  async{
-            final isCLosed   = await modalBottomSheetCreateTask(context);
-             if (isCLosed!= null) {
-                controller.findAllTasks();
-             }
+            onPressed: () {
+             modalBottomSheetCreateTask(context);
+             
             },
           )
         ],

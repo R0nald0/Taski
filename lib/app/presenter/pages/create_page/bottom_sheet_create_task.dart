@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:taski_todo/app/presenter/commons/extensions.dart';
 import 'package:taski_todo/app/presenter/pages/create_page/create_todo_page.dart';
 
-Future<bool?> modalBottomSheetCreateTask(BuildContext context) async {
- //final isKeyBoardOpen =  MediaQuery.of(context).viewInsets.bottom > 0.6 ? true :false;
- return  await showModalBottomSheet(
+void modalBottomSheetCreateTask(BuildContext context) async {
+ showModalBottomSheet(
       isScrollControlled: true,
       showDragHandle: true,
       elevation: 30,

@@ -4,10 +4,10 @@ import 'package:taski_todo/app/domain/model/task.dart';
 import 'package:taski_todo/app/domain/repository/i_taski_repository.dart';
 import 'package:taski_todo/app/presenter/pages/todo_page/bloc/task_state.dart';
 
-class CreateTaskiUseCase extends Cubit<TasksState> {
+class CreateTaskiController extends Cubit<TasksState> {
   final ITaskiRepository _taskiRepository;
 
-  CreateTaskiUseCase({required ITaskiRepository taskController})
+  CreateTaskiController({required ITaskiRepository taskController})
       : _taskiRepository = taskController,
         super(TasksState.initial());
 

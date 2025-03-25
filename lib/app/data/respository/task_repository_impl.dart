@@ -86,7 +86,7 @@ class TaskRepositoryImpl implements ITaskiRepository {
     final db = await _database.openConnetion();
     try {
       final result = await db.query('task',where:'title LIKE ?',
-      whereArgs: ['%$title'] );
+      whereArgs: ['$title%'] );
       return result.map((e) => Task.fromMap(e)).toList();
     } on Exception catch (e) {
        print(e);
