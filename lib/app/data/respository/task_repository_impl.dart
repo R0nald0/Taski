@@ -17,20 +17,10 @@ class TaskRepositoryImpl implements ITaskiRepository {
     try {
       final db = await _database.openConnetion();
       final result = await db.insert('task', task.toMap());
-      /* .rawInsert("INSERT INTO task (title, description, isCompleted) VALUES (?, ?, ?)", 
-           [{
-             
-             'title' : "use case",
-             'description' :"criar design use case",
-             'isCompleted' : 0
-           }]
-           ); */
       return result;
-    } on DatabaseException catch (e, s) {
-      if (kDebugMode) {
-        print(e);
-        print(s);
-      }
+
+    } on Exception catch (e, s) {
+       log("Erro $e ,$s");
       throw TaskiException(message: "Erro ao salvar no banco");
     }
   }
@@ -41,15 +31,12 @@ class TaskRepositoryImpl implements ITaskiRepository {
       final db = await _database.openConnetion();
       final result = await db.update(
           "task",
-          where: 'id=?',
           taskUpdate.toMap(),
+          where: 'id=?',
           whereArgs: [taskUpdate.id]);
       return result;
     } on DatabaseException catch (e, s) {
-      if (kDebugMode) {
-        print(e);
-        print(s);
-      }
+     log("Erro $e ,$s");
       throw TaskiException(message: "Erro ao atualizar dados");
     }
   }
@@ -59,13 +46,13 @@ class TaskRepositoryImpl implements ITaskiRepository {
     try {
       final db = await _database.openConnetion();
       return await db.rawDelete("DELETE FROM task WHERE isCompleted =? ", [1]);
-    } on DatabaseException catch (e, s) {
+    } on Exception catch (e, s) {
       if (kDebugMode) {
         print(e);
         print(s);
       }
       throw TaskiException(
-          message: "Erro ao deletas todas as tasks comlpletadas ");
+          message: "Erro ao deleta todas as tasks comlpletadas ");
     }
   }
 
@@ -74,7 +61,7 @@ class TaskRepositoryImpl implements ITaskiRepository {
     try {
       final db = await _database.openConnetion();
       return db.delete("task", where: "id = ?", whereArgs: [task.id]);
-    } on DatabaseException catch (e, s) {
+    } on Exception catch (e, s) {
       if (kDebugMode) {
         print(e);
         print(s);
@@ -87,7 +74,7 @@ class TaskRepositoryImpl implements ITaskiRepository {
   Future<List<Task>> findSeracByTitle(String title) async {
     try {
       if(title.isEmpty) {throw TaskiException(message: "Campo invalido");}
-      
+
       final db = await _database.openConnetion();
       final result =
           await db.query('task', where: 'title LIKE ?', whereArgs: ['$title%']);

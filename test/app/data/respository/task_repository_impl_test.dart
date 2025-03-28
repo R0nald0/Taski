@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:taski_todo/app/core/exceptions/taski_exception.dart';
 import 'package:taski_todo/app/data/local/sqlite/database_service.dart';
 import 'package:taski_todo/app/data/respository/task_repository_impl.dart';
+import 'package:taski_todo/app/domain/model/task.dart';
 import 'package:taski_todo/app/domain/repository/i_taski_repository.dart';
 
 class MockDatabase extends Mock implements Database {}
@@ -91,5 +92,86 @@ void main() {
           throwsA(isA<TaskiException>()));
     });
 
+  });
+
+  group('create task test', (){
+    test('Give a valid Task ,when createTask,should insert Taask in database',()async{
+      final task = Task(title: "Correr", description: "Correr 50km em 3hrs", isCompleted: false);
+     
+      when(() => mockSqlite.openConnetion()).thenAnswer((_) async => db);
+      when(() => db.insert('task', task.toMap())).thenAnswer((_) async => 1);
+      
+      final result  = await taskRepository.createTask(task);  
+      expect(result, 1);
+      verify(() => db.insert("task", task.toMap())).called(1);
+
+    });
+
+  });
+
+  group('delete cases test', (){
+    
+    test("Given a task,when delete ,should remove a task and number of line modified", () async{  
+      final task = Task(id: 1, title: "Correr", description: "Correr 50km em 3hrs", isCompleted: false);
+     
+       when(() => mockSqlite.openConnetion()).thenAnswer((_)  async=> db);
+       when(() => db.delete(any(), where: any(named: "where"), whereArgs: any(named: "whereArgs")))
+       .thenAnswer((_) async => 1);
+
+      final result    = await taskRepository.delete(task);
+      
+      expect(result,equals(1));
+      verify(() => db.delete('task',where: any(named: "where"),whereArgs: any(named: "whereArgs"))).called(1);
+    });
+
+    test("Given a invalid task,when delete ,should return a TaskException", () async{  
+      final task = Task(id: 1, title: "Correr", description: "Correr 50km em 3hrs", isCompleted: false);
+     
+       when(() => mockSqlite.openConnetion()).thenAnswer((_)  async=> db);
+       when(() => db.delete(any(), where: any(named: "where"), whereArgs: any(named: "whereArgs")))
+       .thenThrow(Exception());
+
+      expect(() async => await taskRepository.delete(task), throwsA(isA<TaskiException>()));
+    });
+       
+    test("when deleteAll ,should remove all tasks completed", () async{  
+ 
+       when(() => mockSqlite.openConnetion()).thenAnswer((_)  async=> db);
+       when(() => db.rawDelete(any(),any()))
+       .thenAnswer((_) async => 1);
+
+      final result    = await taskRepository.deleteAll();
+      
+      expect(result,equals(1));
+      verify(() => db.rawDelete(any(),any())).called(1);
+    });
+
+
+  
+  });
+
+  group("update task case", (){
+     test("when update is called,should update task eand retunr lined  modified", ()async{
+        
+        final task = Task(id: 1, title: "Correr", description: "Correr 50km em 3hrs", isCompleted: false);
+        final taskUpdate = Task(id: 1, title: "Correr mais rapido", description: "Correr 50km em 3hrs", isCompleted: true);
+     
+     
+       when(() => mockSqlite.openConnetion()).thenAnswer((_)  async=> db);
+       when(() => db.update(
+        any(),
+        any(), 
+        where: any(named: "where"),
+         whereArgs: any(named: "whereArgs"))
+         )
+       .thenAnswer((_) async => 1);
+      
+
+      final result  = await taskRepository.updateTask(taskUpdate);
+      
+      expect(result,equals(1));
+      verify(() => db.update('task',any() ,where: any(named: "where"),whereArgs: any(named: "whereArgs"))).called(1);
+
+     });
   });
 }
