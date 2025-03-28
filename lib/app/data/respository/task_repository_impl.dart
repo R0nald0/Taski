@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:taski_todo/app/core/exceptions/taski_exception.dart';
@@ -6,9 +8,9 @@ import 'package:taski_todo/app/domain/model/task.dart';
 import 'package:taski_todo/app/domain/repository/i_taski_repository.dart';
 
 class TaskRepositoryImpl implements ITaskiRepository {
-  final datbaseService _database;
+  final DatbaseService _database;
 
-  TaskRepositoryImpl({required datbaseService database}) : _database = database;
+  TaskRepositoryImpl({required DatbaseService database}) : _database = database;
 
   @override
   Future<int> createTask(Task task) async {
@@ -83,25 +85,28 @@ class TaskRepositoryImpl implements ITaskiRepository {
 
   @override
   Future<List<Task>> findSeracByTitle(String title) async {
-    final db = await _database.openConnetion();
     try {
-      final result = await db.query('task',where:'title LIKE ?',
-      whereArgs: ['$title%'] );
+      if(title.isEmpty) {throw TaskiException(message: "Campo invalido");}
+      
+      final db = await _database.openConnetion();
+      final result =
+          await db.query('task', where: 'title LIKE ?', whereArgs: ['$title%']);
       return result.map((e) => Task.fromMap(e)).toList();
     } on Exception catch (e) {
-       print(e);
+      log("Erro $e");
       throw TaskiException(message: "Erro ao buscar dados :$e");
     }
   }
 
   @override
   Future<List<Task>> findTasks() async {
-    final db = await _database.openConnetion();
     try {
+      final db = await _database.openConnetion();
       final result = await db.rawQuery('SELECT *FROM task');
       return result.map((e) => Task.fromMap(e)).toList();
     } on Exception catch (e) {
-      throw TaskiException(message: "Erro ao buscar dados :$e");
+      log("Erro $e");
+      throw TaskiException(message: "Erro ao buscar dados ");
     }
   }
 
@@ -111,10 +116,9 @@ class TaskRepositoryImpl implements ITaskiRepository {
       final db = await _database.openConnetion();
       final result =
           await db.query('task', where: 'isCompleted = ?', whereArgs: [1]);
-
       return result.map((e) => Task.fromMap(e)).toList();
-    } on DatabaseException catch (e) {
-      print(e);
+    } on Exception catch (e) {
+      log("Erro $e");
       throw TaskiException(message: "Erro ao buscar dados :$e");
     }
   }

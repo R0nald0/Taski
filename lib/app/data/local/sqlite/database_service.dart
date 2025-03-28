@@ -4,17 +4,17 @@ import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class datbaseService {
+class DatbaseService {
   static const _version = 1;
   static const  _databaseName ='TASKI_DB';
 
-  static datbaseService? _instance;
+  static DatbaseService? _instance;
   Database? _db;
 
-  datbaseService._();
+  DatbaseService._();
    
-   factory datbaseService(){
-    _instance ??= datbaseService._();
+   factory DatbaseService(){
+    _instance ??= DatbaseService._();
     return _instance!;
    }
   

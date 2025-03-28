@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taski_todo/app/core/mixins/baseStateTaski_loader.dart';
-
 import 'package:taski_todo/app/domain/model/task.dart';
 import 'package:taski_todo/app/presenter/commons/extensions.dart';
 import 'package:taski_todo/app/presenter/page_controller.dart';

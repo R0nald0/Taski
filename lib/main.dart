@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
        providers: [
           Provider<ILocalStorage>(create: (context)=>LocalStorage()),
-          Provider(create: (context) => datbaseService(),lazy: false,),
+          Provider(create: (context) => DatbaseService(),lazy: false,),
 
           Provider<ITaskiRepository>(create: (context)=> TaskRepositoryImpl(database:context.read())),
           Provider<IUserRepository>(create: (context)=>UserRepository(localStorage: context.read())),
