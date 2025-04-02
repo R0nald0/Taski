@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:taski_todo/app/core/exceptions/taski_exception.dart';
 import 'package:taski_todo/app/domain/model/task.dart';
@@ -34,19 +36,21 @@ class TaskController extends Cubit<TasksState> {
     }
   }
 
-  
-
   Future<void> updateCheck(bool isCheck, Task task) async {
     try {
-      await _taskiRepository.updateTask(task.copyWith(isCompleted: isCheck));
       emit(state.copyWith(state: TaskStatus.loading));
-
+  
+      await _taskiRepository.updateTask(task);
+      
       final tasks = await _taskiRepository.findTasks();
       emit(state.copyWith(state: TaskStatus.loaded, tasks: tasks));
 
-    } on TaskiException catch (e) {
+    }  on TaskiException catch (e) {
       emit(state.copyWith(state: TaskStatus.erro, erro: e.message));
-    }
+    }on Exception catch(e,s){
+        log("Erro $e ,$s");
+        emit(state.copyWith(state: TaskStatus.erro, erro: "Erro ao atualizar"));
+    } 
   }
    Future<void> delete(Task task) async {
     try {
@@ -59,7 +63,9 @@ class TaskController extends Cubit<TasksState> {
     } on TaskiException catch (e) {
       emit(state.copyWith(state: TaskStatus.erro, erro: e.message));
     }
-  }Future<void> deleteAll() async {
+  }
+  
+  Future<void> deleteAll() async {
     try {
       emit(state.copyWith(state: TaskStatus.loading));
       await _taskiRepository.deleteAll();
